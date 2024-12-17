@@ -1,8 +1,12 @@
 from django.shortcuts import render, redirect
-from .form import ExpenseForm
+from .form import ExpenseForm, RegistrationForm
 from .models import Expense
 from datetime import date, timedelta
 from django.db.models import Sum as sum
+from django.contrib.auth import user_logged_in
+
+def home(request)
+
 
 def index(request):
     if request.method == 'POST':
@@ -52,4 +56,15 @@ def delete(request, id):
         expense = Expense.objects.get(id=id)
         expense.delete()
     return redirect('index')
+
+def register(request):
+    if request.method == 'POST':
+        forms = RegistrationForm(request.POST)
+        if forms.is_valid():
+            forms.save()
+            return redirect('index')
+    else:
+        forms = RegistrationForm()
+    return render (request, 'myapp/register.html', {'forms':forms})     
+
 
